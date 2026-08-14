@@ -8,6 +8,7 @@ import { Breakouts } from './pages/Breakouts';
 import { Tefr } from './pages/Tefr';
 import { AuctionPage } from './pages/AuctionPage';
 import { AuctionRoom } from './pages/AuctionRoom';
+import { GenerateSquad } from './pages/GenerateSquad';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/tefr" element={<Tefr />} />
           <Route path="/asta" element={<AuctionPage />} />
           <Route path="/asta/:id" element={<AuctionRoom />} />
+          <Route path="/genera-rosa" element={<GenerateSquad />} />
         </Route>
       </Routes>
     </HashRouter>

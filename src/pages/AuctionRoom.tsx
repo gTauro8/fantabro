@@ -1,10 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import { AlertTriangle, ArrowLeft, Check, Flame, RotateCcw, Search, Sparkles, X } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, Check, Flame, RotateCcw, Search, Sparkles, Wand2, X } from 'lucide-react';
 import { Card } from '../components/Card';
 import { StrategyPanel } from '../components/StrategyPanel';
-import { SquadGenerator } from '../components/SquadGenerator';
 import { activeListone, getAlternatives, type ListonePlayer } from '../data/listone';
 import { ROLE_LABEL, type Role } from '../data/types';
 import { assignPlayer, spentByTeam, unassignPlayer, useAuctions } from '../lib/useAuctions';
@@ -32,7 +31,7 @@ export function AuctionRoom() {
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const [assignTarget, setAssignTarget] = useState<ListonePlayer | null>(null);
   const [expandedTeamId, setExpandedTeamId] = useState<string | null>(null);
-  const [expandedTab, setExpandedTab] = useState<'strategia' | 'rosa' | 'genera'>('strategia');
+  const [expandedTab, setExpandedTab] = useState<'strategia' | 'rosa'>('strategia');
 
   const assignedMap = useMemo(() => {
     const map = new Map<string, { teamId: string; teamName: string; price: number }>();
@@ -163,42 +162,40 @@ export function AuctionRoom() {
         if (!team) return null;
         return (
           <Card className="mb-6">
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
               <h3 className="text-sm font-semibold text-[var(--text)]">{team.name}</h3>
-              <div className="flex gap-1 rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-1">
-                <button
-                  onClick={() => setExpandedTab('strategia')}
-                  className={clsx(
-                    'rounded-md px-2.5 py-1 text-xs font-medium transition-colors',
-                    expandedTab === 'strategia'
-                      ? 'bg-emerald-500/15 text-emerald-400'
-                      : 'text-[var(--text-dim)] hover:text-[var(--text)]',
-                  )}
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1 rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-1">
+                  <button
+                    onClick={() => setExpandedTab('strategia')}
+                    className={clsx(
+                      'rounded-md px-2.5 py-1 text-xs font-medium transition-colors',
+                      expandedTab === 'strategia'
+                        ? 'bg-emerald-500/15 text-emerald-400'
+                        : 'text-[var(--text-dim)] hover:text-[var(--text)]',
+                    )}
+                  >
+                    Strategia
+                  </button>
+                  <button
+                    onClick={() => setExpandedTab('rosa')}
+                    className={clsx(
+                      'rounded-md px-2.5 py-1 text-xs font-medium transition-colors',
+                      expandedTab === 'rosa'
+                        ? 'bg-emerald-500/15 text-emerald-400'
+                        : 'text-[var(--text-dim)] hover:text-[var(--text)]',
+                    )}
+                  >
+                    Rosa ({team.picks.length})
+                  </button>
+                </div>
+                <Link
+                  to={`/genera-rosa?auctionId=${auctionId}&teamId=${team.id}`}
+                  className="flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1.5 text-xs font-medium text-emerald-400 hover:bg-emerald-500/20"
                 >
-                  Strategia
-                </button>
-                <button
-                  onClick={() => setExpandedTab('rosa')}
-                  className={clsx(
-                    'rounded-md px-2.5 py-1 text-xs font-medium transition-colors',
-                    expandedTab === 'rosa'
-                      ? 'bg-emerald-500/15 text-emerald-400'
-                      : 'text-[var(--text-dim)] hover:text-[var(--text)]',
-                  )}
-                >
-                  Rosa ({team.picks.length})
-                </button>
-                <button
-                  onClick={() => setExpandedTab('genera')}
-                  className={clsx(
-                    'rounded-md px-2.5 py-1 text-xs font-medium transition-colors',
-                    expandedTab === 'genera'
-                      ? 'bg-emerald-500/15 text-emerald-400'
-                      : 'text-[var(--text-dim)] hover:text-[var(--text)]',
-                  )}
-                >
-                  Genera
-                </button>
+                  <Wand2 size={13} />
+                  Genera rosa
+                </Link>
               </div>
             </div>
 
@@ -208,18 +205,6 @@ export function AuctionRoom() {
                 budgetPerTeam={auction.budgetPerTeam}
                 availableIds={availableIds}
                 onSelectPlayer={setFocusedId}
-              />
-            ) : expandedTab === 'genera' ? (
-              <SquadGenerator
-                team={team}
-                budgetPerTeam={auction.budgetPerTeam}
-                availableIds={availableIds}
-                onAssignAll={(picks) => {
-                  const validPicks = picks.filter((p) => availableIds.has(p.playerId));
-                  updateAuction(auctionId, (a) =>
-                    validPicks.reduce((acc, p) => assignPlayer(acc, team.id, p.playerId, p.price), a),
-                  );
-                }}
               />
             ) : team.picks.length === 0 ? (
               <p className="text-sm text-[var(--text-dim)]">Nessun giocatore ancora assegnato.</p>

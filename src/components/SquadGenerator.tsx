@@ -31,7 +31,7 @@ export function SquadGenerator({
   team: AuctionTeam;
   budgetPerTeam: number;
   availableIds: Set<string>;
-  onAssignAll: (picks: { playerId: string; price: number }[]) => void;
+  onAssignAll?: (picks: { playerId: string; price: number }[]) => void;
 }) {
   const [preferredTeams, setPreferredTeams] = useState<string[]>([]);
   const [avoidTeams, setAvoidTeams] = useState<string[]>([]);
@@ -218,13 +218,17 @@ export function SquadGenerator({
           <div>
             <div className="mb-2 flex items-center justify-between">
               <p className="text-xs font-semibold text-[var(--text)]">Rosa generata ({generated.picks.length})</p>
-              <button
-                onClick={() => onAssignAll(generated.picks.map((p) => ({ playerId: p.player.id, price: p.player.price })))}
-                className="flex items-center gap-1.5 rounded-md bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-400 hover:bg-emerald-500/20"
-              >
-                <Check size={12} />
-                Assegna tutta la rosa
-              </button>
+              {onAssignAll && (
+                <button
+                  onClick={() =>
+                    onAssignAll(generated.picks.map((p) => ({ playerId: p.player.id, price: p.player.price })))
+                  }
+                  className="flex items-center gap-1.5 rounded-md bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-400 hover:bg-emerald-500/20"
+                >
+                  <Check size={12} />
+                  Assegna tutta la rosa
+                </button>
+              )}
             </div>
             <div className="space-y-1.5">
               {generated.picks.map((pick, i) => (

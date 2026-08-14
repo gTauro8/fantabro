@@ -7026,5 +7026,33 @@
     "fvm": 3,
     "fvmMantra": 3,
     "transferredOut": true
+  },
+  {
+    "id": "4998",
+    "name": "Molina N.",
+    "team": "Roma",
+    "role": "D",
+    "roleMantra": "Dd",
+    "price": 18,
+    "priceInitial": 18,
+    "priceMantra": 18,
+    "priceMantraInitial": 18,
+    "fvm": 87,
+    "fvmMantra": 87,
+    "transferredOut": false
+  },
+  {
+    "id": "5641",
+    "name": "Chalobah T.",
+    "team": "Como",
+    "role": "D",
+    "roleMantra": "Dc",
+    "price": 9,
+    "priceInitial": 9,
+    "priceMantra": 10,
+    "priceMantraInitial": 10,
+    "fvm": 26,
+    "fvmMantra": 28,
+    "transferredOut": false
   }
 ]

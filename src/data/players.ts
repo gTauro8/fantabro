@@ -39,6 +39,7 @@ export const players: Player[] = [
   p('Alessandro Bastoni', 'Inter', 'DIF', 'Top', 'Centrale titolare inamovibile, ottimo anche da Modificatore.', 'Basso'),
   p('Gleison Bremer', 'Juventus', 'DIF', 'Top', 'Rientro dall\'infortunio, top per il Modificatore Difesa.', 'Basso'),
   p('Nahuel Molina', 'Roma', 'DIF', 'Value Pick', 'Trasferimento ufficiale dall\'Atlético Madrid (10/08/2026): quinto di spinta nel nuovo assetto giallorosso.', 'Medio'),
+  p('Trevoh Chalobah', 'Como', 'DIF', 'Value Pick', 'Trasferimento ufficiale dal Chelsea (battuta la concorrenza dell\'Inter): centrale fisico e aggressivo in pressing per la difesa del Como.', 'Medio'),
   p('Oumar Solet', 'Udinese', 'DIF', 'Value Pick', 'Profilo ad alto rendimento per il Modificatore Difesa.', 'Basso'),
   p('Bartesaghi', 'Milan', 'DIF', 'Value Pick', 'Ampiezza sulla corsia nel 3-4-2-1 di Amorim.', 'Medio'),
   p('Juan Miranda', 'Bologna', 'DIF', 'Value Pick', 'Difensore regolare da assist nel sistema Tedesco.', 'Basso'),
@@ -185,11 +186,13 @@ for (const player of players) {
   }
 }
 
-// Trasferimenti reali confermati da fonti giornalistiche (10/08/2026) ma non
-// ancora presenti nello snapshot del listone scaricato il 13/08/2026: non sono
-// errori, solo dati in attesa di sincronizzazione lato Fantacalcio.it.
+// Trasferimenti reali confermati da fonti giornalistiche ma non ancora
+// presenti nello snapshot del listone scaricato dalla pipeline automatica:
+// non sono errori, solo dati in attesa di sincronizzazione lato Fantacalcio.it.
+// Nahuel Molina e Trevoh Chalobah non sono più in questa lista: sono stati
+// aggiunti manualmente a listone.json (id ufficiali fantacalcio.it) in attesa
+// che il mirror scaricato li includa, quindi risultano già `verified`.
 const PENDING_SYNC = [
-  ['Nahuel Molina', 'Roma'],
   ['Giuseppe Aurelio', 'Cagliari'],
   ['Florian Grillitsch', 'Frosinone'],
   ['Kevin Carlos', 'Cagliari'],

@@ -15,22 +15,22 @@ const ROLES: Role[] = ['POR', 'DIF', 'CEN', 'ATT'];
 const MAX_PER_TEAM = 5;
 
 /**
- * Tetto massimo di giocatori di fascia Top nell'intera rosa generata (non per
- * reparto). In un'asta reale con ~20 squadre a caccia degli stessi pochi
- * giocatori Top, il prezzo viene spinto ben oltre il FVM listato (un Lautaro
- * da 500 crediti totali arriva a costare 200+): puntare ad averne uno per
- * reparto è irrealistico e brucerebbe la stragrande maggioranza del budget.
+ * Tetto massimo di giocatori di fascia Top per singolo reparto: la strategia
+ * di riferimento (StrategyPanel) punta a un top per reparto come ancora del
+ * reparto, non a più di uno — prenderne un secondo nello stesso reparto
+ * userebbe budget che serve altrove nella rosa.
  */
-const MAX_TOP_PER_SQUAD = 1;
+const MAX_TOP_PER_ROLE = 1;
 
 /**
  * Un singolo slot non può assorbire più di questo multiplo della sua quota
  * "equa" di budget di reparto (budget di reparto rimanente / slot rimanenti).
- * Impedisce che il primo giocatore scelto in un reparto esaurisca quasi
- * tutto il budget disponibile, lasciando gli slot successivi riempibili solo
- * con scarti da 1 credito.
+ * Stesso rapporto usato da StrategyPanel per i suggerimenti (budget medio per
+ * slot mancante ×1.6): impedisce che il primo giocatore scelto in un reparto
+ * esaurisca quasi tutto il budget disponibile, lasciando gli slot successivi
+ * riempibili solo con scarti da 1 credito.
  */
-const SLOT_FLEX_MULTIPLIER = 2.2;
+const SLOT_FLEX_MULTIPLIER = 1.6;
 
 const TIER_BASE_SCORE: Record<MarketTier, number> = {
   Top: 8,
@@ -103,9 +103,10 @@ export interface GeneratedSquad {
  * squadra, tramite selezione greedy pesata su un punteggio "esperti"
  * (fascia FVM + categoria curata + bonus Sorprese + preferenza di squadra),
  * con un tetto di spesa per slot legato alla quota equa di budget del
- * reparto (vedi SLOT_FLEX_MULTIPLIER) e un tetto complessivo di giocatori
- * Top nell'intera rosa (vedi MAX_TOP_PER_SQUAD), per restare su risultati
- * plausibili in un'asta reale a budget condiviso.
+ * reparto (vedi SLOT_FLEX_MULTIPLIER, stesso rapporto della StrategyPanel) e
+ * un tetto di un giocatore Top per reparto (vedi MAX_TOP_PER_ROLE), per
+ * restare su risultati plausibili in un'asta reale a budget condiviso pur
+ * puntando comunque a un top per reparto come previsto dalla strategia.
  */
 export function generateSquad({
   team,
@@ -132,12 +133,9 @@ export function generateSquad({
 
   const chosenIds = new Set<string>();
   const pickedPerTeam = new Map<string, number>();
-  let topPicksSoFar = 0;
   for (const pick of team.picks) {
     const p = activeListone.find((x) => x.id === pick.playerId);
-    if (!p) continue;
-    pickedPerTeam.set(p.team, (pickedPerTeam.get(p.team) ?? 0) + 1);
-    if (tiers.get(p.id) === 'Top') topPicksSoFar += 1;
+    if (p) pickedPerTeam.set(p.team, (pickedPerTeam.get(p.team) ?? 0) + 1);
   }
   const picks: GeneratedPick[] = [];
   const warnings: string[] = [];
@@ -148,6 +146,11 @@ export function generateSquad({
 
     const roleTargetBudget = Math.round((budgetPerTeam * ROLE_BUDGET_PCT[role]) / 100);
     const roleBudget = Math.min(Math.max(0, roleTargetBudget - spentByRole[role]), totalRemaining);
+
+    let topPicksInRole = team.picks.filter((pick) => {
+      const p = activeListone.find((x) => x.id === pick.playerId);
+      return p && p.role === role && tiers.get(p.id) === 'Top';
+    }).length;
 
     const candidates = activeListone
       .filter((p) => p.role === role)
@@ -166,12 +169,12 @@ export function generateSquad({
     for (let i = 0; i < remainingSlots; i++) {
       const reserveForRest = slotsLeft - 1;
       const fairShare = budgetLeftForRole / slotsLeft;
-      const flexCap = Math.ceil(fairShare * SLOT_FLEX_MULTIPLIER);
+      const flexCap = Math.ceil(Math.max(fairShare * SLOT_FLEX_MULTIPLIER, 5));
       const maxSpend = Math.max(1, Math.min(budgetLeftForRole - reserveForRest, flexCap));
       const underTeamCap = (c: (typeof candidates)[number]) =>
         (pickedPerTeam.get(c.player.team) ?? 0) < MAX_PER_TEAM;
       const underTopCap = (c: (typeof candidates)[number]) =>
-        c.tier !== 'Top' || topPicksSoFar < MAX_TOP_PER_SQUAD;
+        c.tier !== 'Top' || topPicksInRole < MAX_TOP_PER_ROLE;
 
       let choice = candidates.find(
         (c) =>
@@ -201,7 +204,7 @@ export function generateSquad({
 
       chosenIds.add(choice.player.id);
       pickedPerTeam.set(choice.player.team, (pickedPerTeam.get(choice.player.team) ?? 0) + 1);
-      if (choice.tier === 'Top') topPicksSoFar += 1;
+      if (choice.tier === 'Top') topPicksInRole += 1;
       budgetLeftForRole -= choice.player.price;
       totalRemaining -= choice.player.price;
       slotsLeft -= 1;

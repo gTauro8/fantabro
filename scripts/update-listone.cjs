@@ -17,6 +17,43 @@ const FALLBACK_DOWNLOAD_URL = 'https://www.chiccheinformatiche.com/download/1388
 const MIN_EXPECTED_PLAYERS = 400; // guardia di sicurezza: sotto questa soglia, non salvare
 const OUT_PATH = path.join(__dirname, '..', 'src', 'data', 'listone.json');
 
+// Trasferimenti reali confermati (fonte: schede giocatore fantacalcio.it,
+// 14/08/2026) ma non ancora presenti nel mirror scaricato da questa pipeline
+// — l'id numerico è lo stesso id ufficiale fantacalcio.it, quindi quando il
+// mirror li includerà finalmente questa voce diventerà un duplicato e verrà
+// scartata automaticamente dal dedupe sotto (nessuna azione manuale
+// necessaria per rimuoverla in futuro).
+const MANUAL_PENDING_PLAYERS = [
+  {
+    id: '4998',
+    name: 'Molina N.',
+    team: 'Roma',
+    role: 'D',
+    roleMantra: 'Dd',
+    price: 18,
+    priceInitial: 18,
+    priceMantra: 18,
+    priceMantraInitial: 18,
+    fvm: 87,
+    fvmMantra: 87,
+    transferredOut: false,
+  },
+  {
+    id: '5641',
+    name: 'Chalobah T.',
+    team: 'Como',
+    role: 'D',
+    roleMantra: 'Dc',
+    price: 9,
+    priceInitial: 9,
+    priceMantra: 10,
+    priceMantraInitial: 10,
+    fvm: 26,
+    fvmMantra: 28,
+    transferredOut: false,
+  },
+];
+
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
@@ -110,7 +147,14 @@ async function main() {
   const ceduti = sheetToPlayers(wb, 'Ceduti', { transferredOut: true });
   const all = [...active, ...ceduti];
 
+  const knownIds = new Set(all.map((p) => p.id));
+  const stillPending = MANUAL_PENDING_PLAYERS.filter((p) => !knownIds.has(p.id));
+  all.push(...stillPending);
+
   console.log(`Attivi: ${active.length}, Ceduti: ${ceduti.length}, Totale: ${all.length}`);
+  if (stillPending.length > 0) {
+    console.log(`+ ${stillPending.length} in attesa di sync ufficiale:`, stillPending.map((p) => p.name).join(', '));
+  }
 
   if (active.length < MIN_EXPECTED_PLAYERS) {
     throw new Error(

@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
+      - name: Debug connectivity (temporary)
+        run: |
+          curl -v -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36" \
+            -o /dev/null "https://www.chiccheinformatiche.com/download/138813/" 2>&1 | tail -40 || true
       - run: node scripts/update-listone.cjs
       - name: Commit se il listone è cambiato
         run: |

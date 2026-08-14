@@ -29,7 +29,11 @@ async function resolveDownloadUrl() {
     if (match) return match[0];
     console.warn('Link di download non trovato nella pagina, uso il fallback fisso.');
   } catch (err) {
-    console.warn('Impossibile leggere la pagina di download, uso il fallback fisso:', err.message);
+    console.warn(
+      'Impossibile leggere la pagina di download, uso il fallback fisso:',
+      err.message,
+      err.cause ? `(cause: ${err.cause})` : '',
+    );
   }
   return FALLBACK_DOWNLOAD_URL;
 }
@@ -104,6 +108,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error('Aggiornamento listone FALLITO:', err.message);
+  console.error('Aggiornamento listone FALLITO:', err.message, err.cause ? `(cause: ${err.cause})` : '');
   process.exit(1);
 });

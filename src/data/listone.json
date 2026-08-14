@@ -7054,5 +7054,47 @@
     "fvm": 26,
     "fvmMantra": 28,
     "transferredOut": false
+  },
+  {
+    "id": "7547",
+    "name": "Kevin Carlos",
+    "team": "Cagliari",
+    "role": "A",
+    "roleMantra": "Pc",
+    "price": 13,
+    "priceInitial": 13,
+    "priceMantra": 12,
+    "priceMantraInitial": 12,
+    "fvm": 47,
+    "fvmMantra": 44,
+    "transferredOut": false
+  },
+  {
+    "id": "7548",
+    "name": "Aurelio",
+    "team": "Cagliari",
+    "role": "D",
+    "roleMantra": "Ds",
+    "price": 2,
+    "priceInitial": 2,
+    "priceMantra": 2,
+    "priceMantraInitial": 2,
+    "fvm": 5,
+    "fvmMantra": 5,
+    "transferredOut": false
+  },
+  {
+    "id": "7550",
+    "name": "Grillitsch",
+    "team": "Frosinone",
+    "role": "C",
+    "roleMantra": "C",
+    "price": 5,
+    "priceInitial": 5,
+    "priceMantra": 5,
+    "priceMantraInitial": 5,
+    "fvm": 5,
+    "fvmMantra": 5,
+    "transferredOut": false
   }
 ]

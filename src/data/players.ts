@@ -189,14 +189,11 @@ for (const player of players) {
 // Trasferimenti reali confermati da fonti giornalistiche ma non ancora
 // presenti nello snapshot del listone scaricato dalla pipeline automatica:
 // non sono errori, solo dati in attesa di sincronizzazione lato Fantacalcio.it.
-// Nahuel Molina e Trevoh Chalobah non sono più in questa lista: sono stati
-// aggiunti manualmente a listone.json (id ufficiali fantacalcio.it) in attesa
-// che il mirror scaricato li includa, quindi risultano già `verified`.
-const PENDING_SYNC = [
-  ['Giuseppe Aurelio', 'Cagliari'],
-  ['Florian Grillitsch', 'Frosinone'],
-  ['Kevin Carlos', 'Cagliari'],
-];
+// Nahuel Molina, Trevoh Chalobah, Giuseppe Aurelio, Florian Grillitsch e
+// Kevin Carlos non sono più in questa lista: sono stati aggiunti manualmente
+// a listone.json (id ufficiali fantacalcio.it) in attesa che il mirror
+// scaricato li includa, quindi risultano già `verified`.
+const PENDING_SYNC: [string, string][] = [];
 for (const [name, team] of PENDING_SYNC) {
   const player = players.find((pl) => pl.name === name && pl.team === team);
   if (player) player.pendingSync = true;

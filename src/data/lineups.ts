@@ -1,3 +1,11 @@
+export interface DepartmentBench {
+  /** Sostituti in ordine di priorità: [0] = 1° cambio, [1] = 2° cambio. */
+  goalkeepers?: string[];
+  defenders?: string[];
+  midfielders?: string[];
+  forwards?: string[];
+}
+
 export interface Lineup {
   team: string; // corrisponde a Team.id
   formation: string;
@@ -7,6 +15,8 @@ export interface Lineup {
   attackingMid?: string[];
   forwards: string[];
   battles: string;
+  /** Panchina per reparto: 1°/2° cambio più rilevanti, se verificati. */
+  bench?: DepartmentBench;
 }
 
 /**
@@ -26,6 +36,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Luis Henrique', 'Barella', 'Çalhanoğlu', 'Zieliński', 'Dimarco'],
     forwards: ['Lautaro Martínez', 'Thuram'],
     battles: 'Bisseck-Stones (DC), Diouf-Luis Henrique (est. dx), Sucic/Mkhitaryan-Zieliński (mediano sx)',
+    bench: {
+      goalkeepers: ['Provedel', 'Di Gennaro'],
+      defenders: ['Bisseck', 'Carlos Augusto'],
+      midfielders: ['Frattesi', 'Mkhitaryan'],
+      forwards: ['Bonny', 'Pio Esposito'],
+    },
   },
   {
     team: 'napoli',
@@ -35,6 +51,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Lobotka', 'McTominay', 'Anguissa'],
     forwards: ['Politano', 'Højlund', 'Neres'],
     battles: 'Anguissa-De Bruyne (mezzala), Politano/Neres/Vergara (esterni)',
+    bench: {
+      goalkeepers: ['Milinković-Savić', 'Contini'],
+      defenders: ['Marianucci', 'Olivera'],
+      midfielders: ['Gilmour', 'De Bruyne'],
+      forwards: ['Lucca', 'Lang'],
+    },
   },
   {
     team: 'juventus',
@@ -45,6 +67,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Conceição', 'McKennie', 'Yildiz'],
     forwards: ['Kolo Muani'],
     battles: 'Douglas Luiz-Thuram Kh., Alajbegovic-Conceição, J. David-Kolo Muani',
+    bench: {
+      goalkeepers: ['Perin', 'Pinsoglio'],
+      defenders: ['Gatti', 'Çelik'],
+      midfielders: ['Koopmeiners', 'Miretti'],
+      forwards: ['David', 'Nico González'],
+    },
   },
   {
     team: 'roma',
@@ -55,6 +83,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Soulé', 'Dybala'],
     forwards: ['Malen'],
     battles: 'Rensch-Molina, Pellegrini-Soulé/Dybala, Castro-Malen',
+    bench: {
+      goalkeepers: ['Gollini', 'Vasquez'],
+      defenders: ['Hermoso', 'Ziolkowski'],
+      midfielders: ['El Aynaoui', 'Lorenzo Pellegrini'],
+      forwards: ['Cherubini', 'R. Vaz'],
+    },
   },
   {
     team: 'milan',
@@ -65,6 +99,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Pulisic', 'Leão'],
     forwards: ['Gonçalo Ramos'],
     battles: 'Ricci-Modrić, Nkunku-Pulisic/Leão',
+    bench: {
+      goalkeepers: ['Terracciano', 'Torriani'],
+      defenders: ['Tomori', 'De Winter'],
+      midfielders: ['Jashari', 'Ricci'],
+      forwards: ['Nkunku', 'Chukwueze'],
+    },
   },
   {
     team: 'atalanta',
@@ -74,6 +114,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Samardžić', 'Gaetano', 'Ederson'],
     forwards: ['De Ketelaere', 'Scamacca', 'Zalewski'],
     battles: 'Zappacosta-Bellanova, Gaetano-De Roon, Scamacca-Krstović',
+    bench: {
+      goalkeepers: ['Sportiello', 'Rossi'],
+      defenders: ['Djimsiti', 'Kossounou'],
+      midfielders: ['De Roon', 'Pašalić'],
+      forwards: ['Krstović', 'Raspadori'],
+    },
   },
   {
     team: 'como',
@@ -84,6 +130,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Diao', 'Nico Paz', 'Baturina'],
     forwards: ['Douvikas'],
     battles: 'Couto-Smolčić, Milla-Perrone',
+    bench: {
+      goalkeepers: ['Reina', 'Vigorito'],
+      defenders: ['Van der Brempt', 'Kempf'],
+      midfielders: ['Addai', 'Fadera'],
+      forwards: ['Morata', 'Azón'],
+    },
   },
   {
     team: 'fiorentina',
@@ -93,6 +145,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Ndour', 'Fagioli', 'Oulai'],
     forwards: ['Mastantuono', 'Kean', 'Atta'],
     battles: 'Kean-Piccoli, Valdepeñas-Jiménez-Parisi',
+    bench: {
+      goalkeepers: ['Christensen', 'Lezzerini'],
+      defenders: ['Pongračić', 'Valentini'],
+      midfielders: ['Mandragora', 'Sohm'],
+      forwards: ['Gudmundsson', 'Piccoli'],
+    },
   },
   {
     team: 'bologna',
@@ -102,6 +160,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Ferguson', 'Pobega', 'Odgaard'],
     forwards: ['Orsolini', 'Dovbyk', 'Rowe'],
     battles: 'Lucumí-Vitik, Pobega-Moro, Odgaard-Bernardeschi',
+    bench: {
+      goalkeepers: ['Massimo Pessina', 'Caccavo'],
+      defenders: ['Vitik', 'Casale'],
+      midfielders: ['Moro', 'Dominguez'],
+      forwards: ['Cambiaghi', 'Dallinga'],
+    },
   },
   {
     team: 'lazio',
@@ -111,6 +175,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Taylor', 'Rovella', 'Dele-Bashiru'],
     forwards: ['Isaksen', 'Ratkov', 'Zaccagni'],
     battles: 'Rovella-Cataldi, Ratkov-Dia (attenzione: alcune fonti citano ancora Castellanos, risultato ceduto al West Ham a gennaio 2026 — verificare)',
+    bench: {
+      goalkeepers: ['Motta'],
+      defenders: ['Luca Pellegrini', 'Lazzari'],
+      midfielders: ['Belahyane', 'Cataldi'],
+      forwards: ['Cancellieri'],
+    },
   },
   {
     team: 'torino',
@@ -121,6 +191,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Vlašić', 'Oristanio'],
     forwards: ['Simeone'],
     battles: 'Coco-Comuzzo, Simeone-Zapata',
+    bench: {
+      goalkeepers: ['Paleari', 'Israel'],
+      defenders: ['Masina', 'Cömert'],
+      midfielders: ['Ilić', 'Anjorin'],
+      forwards: ['Adams', 'Njie'],
+    },
   },
   {
     team: 'udinese',
@@ -131,6 +207,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Zaniolo', 'Ekkelenkamp'],
     forwards: ['Keinan Davis'],
     battles: "Ekkelenkamp/Unai Gómez/Chakvetadze (trequarti)",
+    bench: {
+      goalkeepers: ['Padelli'],
+      defenders: ['Bertola', 'Goglichidze'],
+      midfielders: ['Piotrowski', 'Gómez'],
+      forwards: ['Buksa', 'Bayo'],
+    },
   },
   {
     team: 'sassuolo',
@@ -141,6 +223,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Berardi', 'Laurienté'],
     forwards: ['Pinamonti'],
     battles: 'Walukiewicz/Missori, Thorstvedt/Adžić, Bowie jolly su Berardi/Pinamonti/Laurienté',
+    bench: {
+      goalkeepers: ['Turati'],
+      defenders: ['Missori', 'Pieragnolo'],
+      midfielders: ['Boloca', 'Ghion'],
+      forwards: ['Beraldi'],
+    },
   },
   {
     team: 'genoa',
@@ -151,6 +239,11 @@ export const lineups: Lineup[] = [
     attackingMid: ['Vitinha', 'Baldanzi'],
     forwards: ['Colombo'],
     battles: 'Vasquez-Puczka, Sow/Ellertsson/Amorim, Baldanzi/Traoré-Vitinha/Messias',
+    bench: {
+      goalkeepers: ['Sommariva'],
+      midfielders: ['Masini', 'Onana'],
+      forwards: ['Messias', 'Ekuban'],
+    },
   },
   {
     team: 'parma',
@@ -160,6 +253,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Britschgi', 'Sørensen', 'Keita', 'Bernabè'],
     forwards: ['Pellegrino', 'Almqvist'],
     battles: 'Delprato-Troilo, Almqvist/Ondrejka/El Bilal Touré',
+    bench: {
+      goalkeepers: ['Corvi', 'Daffara'],
+      defenders: ['Carboni', "Ndiaye"],
+      midfielders: ['Nicolussi Caviglia', 'Cremaschi'],
+      forwards: ['Ondrejka', 'Benedyczak'],
+    },
   },
   {
     team: 'cagliari',
@@ -169,6 +268,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Zappa', 'Adopo', 'Winks', 'Fazzini', 'Obert'],
     forwards: ['Maldini', 'Kevin Carlos'],
     battles: 'Adopo-Deiola, Kevin Carlos-Borrelli-Mendy-Esposito (alcune fonti: 4-2-3-1/4-3-2-1)',
+    bench: {
+      goalkeepers: ['Sherri', 'Radunović'],
+      defenders: ['Idrissi', 'Pintus'],
+      midfielders: ['Deiola', 'Prati'],
+      forwards: ['Sebastiano Esposito', 'Borrelli'],
+    },
   },
   {
     team: 'lecce',
@@ -179,6 +284,12 @@ export const lineups: Lineup[] = [
     attackingMid: ['Pierotti', 'Gandelman', "N'dri"],
     forwards: ['Geubbels'],
     battles: 'Gaspar/Siebert, Coulibaly/Berisha, Geubbels/Stulić',
+    bench: {
+      goalkeepers: ['Samooja', 'Früchtl'],
+      defenders: ['Jean', 'Ndaba'],
+      midfielders: ['Berisha', 'Maleh'],
+      forwards: ['Stulić', 'Banda'],
+    },
   },
   {
     team: 'monza',
@@ -189,6 +300,11 @@ export const lineups: Lineup[] = [
     attackingMid: ['Colpani', 'Mota'],
     forwards: ['Cutrone'],
     battles: 'Lucchesi/Delli Carri, Mota/Robinson/Ciurria, Cutrone/Petagna',
+    bench: {
+      goalkeepers: ['Pizzignacco'],
+      defenders: ['Lucchesi', 'Antov'],
+      forwards: ['Ciurria', 'Varela'],
+    },
   },
   {
     team: 'frosinone',
@@ -198,6 +314,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Schmid', 'Calò', 'Kvernadze'],
     forwards: ['Raimondo'],
     battles: 'Palmisani/Desplanches, Calvani/Akpoguma/Cittadini, Schmid/Ghedjemis',
+    bench: {
+      goalkeepers: ['Lolić'],
+      defenders: ['Corrado', 'Gelli'],
+      midfielders: ['Koutsoupias', 'Cichella'],
+      forwards: ['Ghedjemis', 'Barcella'],
+    },
   },
   {
     team: 'venezia',
@@ -207,6 +329,12 @@ export const lineups: Lineup[] = [
     midfielders: ['Correia T.', 'Basic', 'Busio', 'Sohm', 'Haps'],
     forwards: ['Adams A.', 'Yeboah J.'],
     battles: 'Moreno/Šverko, Correia/Hainaut, Yeboah/Rrahmani',
+    bench: {
+      goalkeepers: ['Grandi', 'Plizzari'],
+      defenders: ['Svoboda', 'Šverko'],
+      midfielders: ['Helgason', 'Duncan'],
+      forwards: ['Oristanio', 'Rrahmani'],
+    },
   },
 ];
 

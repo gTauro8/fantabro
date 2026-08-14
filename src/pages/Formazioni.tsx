@@ -5,6 +5,7 @@ import { teams } from '../data/teams';
 import { getLineup } from '../data/lineups';
 import { PageHeader, Card } from '../components/Card';
 import { PitchLineup } from '../components/PitchLineup';
+import { BenchDepth } from '../components/BenchDepth';
 
 export function Formazioni() {
   const [teamId, setTeamId] = useState('inter');
@@ -85,6 +86,10 @@ export function Formazioni() {
             </p>
           </Card>
         </div>
+      </div>
+
+      <div className="mt-6">
+        <BenchDepth bench={lineup?.bench} />
       </div>
     </div>
   );

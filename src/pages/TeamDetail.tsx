@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Target, ShieldCheck, Flag, Sparkles, TrendingUp, Users2, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Target, ShieldCheck, Flag, Sparkles, TrendingUp, Users2, AlertTriangle, Newspaper } from 'lucide-react';
 import { getTeamById, teams } from '../data/teams';
 import { players } from '../data/players';
 import { getLineup } from '../data/lineups';
@@ -74,6 +74,23 @@ export function TeamDetail() {
           <p className="text-sm leading-relaxed text-[var(--text-dim)]">{team.identity}</p>
         </Card>
       </div>
+
+      {team.news && team.news.length > 0 && (
+        <Card className="mb-6">
+          <div className="mb-3 flex items-center gap-2">
+            <Newspaper size={16} className="text-emerald-400" />
+            <h2 className="text-sm font-semibold text-[var(--text)]">Notizie Fresche</h2>
+            <span className="ml-auto text-[10px] text-[var(--text-faint)]">agg. 14/08/2026</span>
+          </div>
+          <ul className="space-y-2">
+            {team.news.map((item) => (
+              <li key={item} className="text-sm leading-relaxed text-[var(--text-dim)]">
+                • {item}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
 
       {lineup && (
         <div className="mb-6">

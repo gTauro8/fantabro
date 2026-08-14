@@ -45,6 +45,8 @@ export interface Team {
   setPieces: SetPieceInfo;
   fantasyImpact: string;
   fdr?: TeamFdr;
+  /** Notizie fresche (mercato, infortuni, formazione) raccolte da fonti pubbliche. */
+  news?: string[];
 }
 
 export interface PlayerProjection {
@@ -101,4 +103,13 @@ export interface Player {
   teamCorrected?: boolean;
   /** true per trasferimenti reali confermati da fonti giornalistiche ma non ancora nel listone ufficiale scaricato. */
   pendingSync?: boolean;
+}
+
+export interface Breakout {
+  id: string;
+  team: string; // corrisponde a Team.name
+  name: string;
+  role: Role;
+  reason: string;
+  market?: MarketData;
 }

@@ -29,6 +29,11 @@ export const teams: Team[] = [
       buyTargets: 'Bonny, Luis Henrique, Dimarco',
       sellTargets: 'Nessuno (mantenere i top)',
     },
+    news: [
+      'Trattativa aperta Inter-Roma per Luis Henrique (proposta intorno ai 25 milioni): se il brasiliano parte, i nerazzurri tornano su un nuovo esterno offensivo.',
+      "Dopo l'arrivo di Spence, l'Inter valuta un nuovo assalto a Jones (Tottenham) per rinforzare le fasce.",
+      "Amichevole col Real Betis il 15/8; esordio di campionato contro il Monza il 22/8, con Chivu che sta ancora definendo le rotazioni offensive.",
+    ],
   },
   {
     id: 'napoli',
@@ -53,6 +58,11 @@ export const teams: Team[] = [
     fantasyImpact:
       'Massimizzazione del rendimento per De Bruyne e McTominay a centrocampo. Difensori centrali ottimi da Modificatore per costanza di voti.',
     fdr: undefined,
+    news: [
+      "Allegri ha preso il posto di Conte in panchina; esordio in campionato il 22/8 in trasferta col Genoa.",
+      "Buongiorno fermo per infortunio, si valuta anche l'intervento chirurgico: rientro possibile solo a ottobre. Beukema non al meglio della condizione, difficilmente al 100% per l'esordio.",
+      "Napoli ha rifiutato un prestito di Noa Lang all'Atalanta; sondaggi per Badiashile (Chelsea) e Gatti (Juventus) in difesa.",
+    ],
   },
   {
     id: 'juventus',
@@ -80,6 +90,11 @@ export const teams: Team[] = [
       buyTargets: 'Yildiz, Bremer, Kolo Muani',
       sellTargets: 'Vlahovic (rischio svalutazione)',
     },
+    news: [
+      'Trattativa per Suzuki (PSG) in prestito come nuovo portiere; contatti col Bologna per Lucumì in difesa.',
+      'Yildiz e Zhegrova parzialmente in gruppo; Khephren Thuram gestisce una sindrome femoro-rotulea, Ekhator ha una lesione di basso grado al bicipite femorale.',
+      'Tour precampionato chiuso con vittoria 2-0 sul Palermo a Perth; esordio in Serie A il 23/8 col Frosinone.',
+    ],
   },
   {
     id: 'roma',
@@ -109,6 +124,12 @@ export const teams: Team[] = [
       buyTargets: 'Wesley, Malen, Castro',
       sellTargets: 'Hermoso (rischio cartellini)',
     },
+    news: [
+      "Nahuel Molina è il nuovo terzino destro, arrivato dall'Atletico Madrid.",
+      'Trattativa avanzata per Rodrigo Mora (Porto), proposta di prestito oneroso da 8 milioni.',
+      "Nusa (Lipsia) obiettivo dichiarato di Gasperini per l'esterno offensivo: trattativa da sbloccare nella seconda metà di agosto.",
+      'Pellegrini vicino al rientro in gruppo dopo il recupero fisico; in corso la trattativa per il rinnovo.',
+    ],
   },
   {
     id: 'milan',
@@ -129,6 +150,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Pulisic, Modrić',
     },
     fantasyImpact: 'Pulisic e Gonçalo Ramos riferimenti principali per i bonus.',
+    news: [
+      "Leão ai margini per un problema muscolare (quadricipite): salta l'amichevole col Manchester United (15/8) e resta in dubbio per l'esordio col Torino (23/8).",
+      "Reijnders lascia il Milan per l'Al-Qadsiah (Arabia Saudita, circa 60M); Amorim sta rimodellando la rosa (obiettivi Nwaneri e rinforzi sulle corsie).",
+      "Emergenza infortuni: Pulisic fuori 3-6 settimane per frattura da stress alla fibula; Giménez ko alla caviglia, Gila lesione muscolare; Nkunku vicino al rientro in gruppo.",
+    ],
   },
   {
     id: 'atalanta',
@@ -151,6 +177,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Ederson, Lookman, De Ketelaere',
     },
     fantasyImpact: 'Le mezzali e Scamacca beneficiano dei codici offensivi sarriani.',
+    news: [
+      "Doppio infortunio in casa Dea: De Ketelaere ha una lesione muscolare, Ahanor si è fermato per un problema fisico; da monitorare per l'esordio.",
+      'Pessina si opera lunedì per lussazione della rotula: stagione compromessa in partenza.',
+      'Mercato: ufficiale Kristensen dall\'Udinese in difesa, Gaetano dal Cagliari a centrocampo; sfumato Noa Lang (Benfica si defila).',
+    ],
     fdr: {
       fixtures: 'Sassuolo (C), Bologna (C), Roma (T), Cagliari (C), Fiorentina (T)',
       avgFdr: 2.8,
@@ -178,6 +209,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Baturina, Nico Paz, Moreno',
     },
     fantasyImpact: 'Nico Paz e Baturina profili d\'élite per continuità di rendimento a centrocampo.',
+    news: [
+      "Mercato scatenato (quasi 130M investiti): ufficiali Chalobah (battuta la concorrenza dell'Inter) e Yan Couto (prestito dal Borussia Dortmund con diritto di riscatto).",
+      'Uscite: Posch al Mainz, Le Borgne in Serie B, Sergi Roberto verso i Los Angeles Galaxy.',
+      'Il Como insiste per Kean ma la Fiorentina resiste; valutati anche Delap (Chelsea) e il ritorno di Diego Carlos dal Fenerbahçe.',
+    ],
     fdr: {
       fixtures: 'Udinese (T), Napoli (T), Genoa (T), Parma (C), Fiorentina (C)',
       avgFdr: 3.6,
@@ -204,6 +240,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Gudmundsson, Nicolussi Caviglia, Mandragora',
     },
     fantasyImpact: 'Kean primo slot d\'attacco con elevato ceiling.',
+    news: [
+      "Ufficiale Pellegrino dal Parma (oltre 20M) per l'attacco; Piccoli passa in prestito con obbligo di riscatto al Bologna.",
+      'Kean resta nel mirino di Como e Real Betis, ma la Fiorentina per ora blocca la cessione.',
+      'Il tecnico Grosso valuta il centrocampo con il trio Oulai-Fagioli-Atta; si cerca ancora un rinforzo a sinistra e un vice per Mastantuono.',
+    ],
   },
   {
     id: 'bologna',
@@ -225,6 +266,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Orsolini, Bernardeschi, Miranda',
     },
     fantasyImpact: 'Orsolini status d\'élite. Miranda difensore regolare da assist.',
+    news: [
+      'Domenico Tedesco ha sostituito Vincenzo Italiano in panchina, modulo 4-3-3.',
+      'Trattativa in chiusura per Roberto Piccoli dalla Fiorentina (~20M), con Fabbian discusso come possibile contropartita.',
+      "Casale ai box per lesione agli adduttori, stop di circa 10 giorni, a rischio per l'esordio.",
+    ],
   },
   {
     id: 'lazio',
@@ -244,6 +290,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Rovella, Zaccagni, Isaksen',
     },
     fantasyImpact: 'Zaccagni certezza per bonus e titolarità.',
+    news: [
+      'Cambio in panchina: Gennaro Gattuso ha sostituito Sarri, modulo 4-3-3 con varianti 4-2-3-1.',
+      'Colpo in difesa Ibe Hautekiet (ex Standard Liegi, ~4M) per completare la coppia con Doekhi.',
+      'Nuno Tavares fermo per infiammazione al ginocchio, ha saltato tutte le amichevoli; il club valuta comunque la sua cessione.',
+    ],
   },
   {
     id: 'torino',
@@ -263,6 +314,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Biraghi, Ilić, Vlašić',
     },
     fantasyImpact: 'Vlašić e Biraghi portatori regolari di bonus da palla inattiva.',
+    news: [
+      'Ignazio Abate confermato allenatore (Baroni passato al Verona), modulo a tre difensori ancora in rifinitura.',
+      'Preso il portiere Lucas Perri dal Leeds; arrivati anche Comuzzo, Cömert, Fitz-Jim; Njie corteggiato dalla Premier League.',
+      'Nessun infortunio fresco rilevante; ballottaggio aperto sulla trequarti.',
+    ],
   },
   {
     id: 'udinese',
@@ -276,12 +332,17 @@ export const teams: Team[] = [
     overall: 7.4,
     identity: '3-5-2 / 3-5-1-1 di grande impatto fisico e densità centrale.',
     offensiveProduction: 'Keinan Davis perno d\'attacco, supportato dalla qualità di Zaniolo sulla trequarti.',
-    defensiveSolidity: 'Struttura fisicamente imponente basata su Solet, Kristensen e Kabasele.',
+    defensiveSolidity: 'Struttura fisicamente imponente basata su Solet e Kabasele; Kristensen è passato all\'Atalanta (prestito con obbligo di riscatto, chiuso il 12-13/08) — sulla destra eredita la maglia Zanoli, ex Napoli.',
     setPieces: {
       penalties: 'Keinan Davis, Solet',
       freeKicksCorners: 'Zaniolo, Ekkelenkamp, Lovrić',
     },
     fantasyImpact: 'Solet eccellente per il Modificatore. Davis ottimo rapporto costo/rendimento.',
+    news: [
+      'Kristensen cede il posto: cessione all\'Atalanta in prestito con obbligo di riscatto, operazione chiusa il 12-13 agosto.',
+      'Okoye rientrato in gruppo dal 6 agosto, nessun dubbio sul titolare tra i pali.',
+      'Runjaić, dopo la Coppa Friuli Venezia Giulia (9 agosto): "Prima pensiamo alla salvezza", priorità ai punti.',
+    ],
   },
   {
     id: 'sassuolo',
@@ -300,7 +361,12 @@ export const teams: Team[] = [
       penalties: 'Berardi, Pinamonti',
       freeKicksCorners: 'Berardi, Laurienté',
     },
-    fantasyImpact: 'Berardi nei primi slot di centrocampo/attacco.',
+    fantasyImpact: 'Berardi nei primi slot di centrocampo/attacco, ma attenzione: fermo ai box in questo momento (v. news).',
+    news: [
+      'Mercato in entrata: ufficializzati Obrador (ala 2004 dal Benfica), Domínguez (dal Bologna) e Coulibaly (dal Borussia Dortmund); trattativa aperta con la Lazio per Pinamonti (nodo obbligo di riscatto, il Sassuolo non scende sotto i 15M).',
+      'Difesa decimata: Idzes è appena rientrato in gruppo, Walukiewicz e Candé restano fuori per lesioni muscolari; Berardi e Koné ancora indisponibili.',
+      "Aquilani costruisce un sistema offensivo di stampo \"De Zerbi\", ma la squadra ha subito 7 gol nelle ultime due amichevoli, incluso il 3-2 con l'Augsburg.",
+    ],
   },
   {
     id: 'genoa',
@@ -320,6 +386,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Malinovskyi, Frendrup',
     },
     fantasyImpact: 'Frendrup garanzia di voti costanti e recuperi.',
+    news: [
+      'Mercato in entrata: ufficializzati Sow (dal Sevilla), Vitinha (dall\'Hartberg) e Meichtry (dal Thun); trattative in corso per Ferguson (Brighton) e Mulligan (Hibernian), sondaggio per Van der Brempt (Como).',
+      'Mercato in uscita: Romano in prestito al Novara, Ouedraogo al Rapid Bucarest; Norton-Cuffy nel mirino di Milan, Everton e Hull City.',
+      'Havel torna gradualmente in gruppo, Meichtry ancora ai box; De Rossi lavora sulla fase defensiva dopo il pesante 10-1 subito in amichevole col Bournemouth.',
+    ],
   },
   {
     id: 'parma',
@@ -331,14 +402,19 @@ export const teams: Team[] = [
     bonusPotential: 7.3,
     tacticalReliability: 7.6,
     overall: 7.1,
-    identity: 'Cuesta punta sul 3-5-2/3-4-1-2 (non più 4-3-3): formazione tipo con Suzuki in porta, Delprato-Valenti-Circati-Valeri in difesa, Sørensen-Keita-Bernabè a centrocampo.',
-    offensiveProduction: 'Sviluppo rapido condotto da Bernabè e Nicolussi Caviglia per servire Pellegrino e Almqvist/Touré.',
+    identity: 'Cuesta punta sul 3-5-2/3-4-1-2 (non più 4-3-3): formazione tipo con Delprato-Valenti-Circati-Valeri in difesa, Sørensen-Keita-Bernabè a centrocampo. Suzuki (portiere) e M. Pellegrino (attaccante) sono usciti in estate.',
+    offensiveProduction: "Sviluppo rapido condotto da Bernabè e Nicolussi Caviglia per servire Touré e Almqvist, con David Romero (El Tigre) obiettivo di mercato ancora da chiudere.",
     defensiveSolidity: 'Tendenza a subire reti nei finali di gara per cali di concentrazione.',
     setPieces: {
-      penalties: 'M. Pellegrino, Bernabè',
+      penalties: 'Bernabè (rigorista da confermare dopo l\'uscita di M. Pellegrino)',
       freeKicksCorners: 'Bernabè, Hernani',
     },
     fantasyImpact: 'Bernabè centrocampista da bonus leggero e continuità.',
+    news: [
+      'Cessioni pesanti: Pellegrino alla Fiorentina (circa 30M) e Suzuki verso il PSG (circa 35M, con la Juventus alla finestra).',
+      'Nuovi arrivi: Zouin firmato fino al 2031; trattativa avanzata per l\'attaccante David Romero (El Tigre, circa 9M, possibile chiusura nelle prossime 48 ore).',
+      'Cuesta deve integrare in fretta i nuovi arrivi in vista del debutto in Coppa Italia col Catania il 14 agosto.',
+    ],
   },
   {
     id: 'cagliari',
@@ -351,13 +427,18 @@ export const teams: Team[] = [
     tacticalReliability: 7.8,
     overall: 7.0,
     identity: '3-5-2 d\'attesa e ripartenza, con marcato sfruttamento dei calci di punizione e corner.',
-    offensiveProduction: 'Giocate guidate da Fazzini a supporto del centravanti fisico Kevin Carlos.',
+    offensiveProduction: 'Giocate guidate da Fazzini a supporto del centravanti fisico Kevin Carlos. Gaetano è passato all\'Atalanta (ufficiale): rigorista/piazzati da ridefinire.',
     defensiveSolidity: 'Linea difensiva guidata da Yerry Mina, efficace nelle respinte aeree.',
     setPieces: {
-      penalties: 'Mina, Gaetano, Esposito',
-      freeKicksCorners: 'Gaetano, Prati, Fazzini',
+      penalties: 'Mina, Fazzini (Gaetano ceduto all\'Atalanta)',
+      freeKicksCorners: 'Prati, Fazzini',
     },
     fantasyImpact: 'Mina difensore d\'area utile per i bonus di testa.',
+    news: [
+      "Situazione Esposito: attaccante in uscita, il Como ha riaperto la trattativa e il Marsiglia si è mosso con un sondaggio; Pisacane non commenta la vicenda (non ancora confermata).",
+      'Mercato in entrata: ufficiali Aurelio (dallo Spezia), Maldini (dall\'Atalanta in prestito con opzione di riscatto), Felici e Winks (dal Leicester).',
+      'Per la Coppa Italia contro l\'Arezzo, Mina indisponibile e Borrelli fuori per stanchezza muscolare; Pisacane valuta Maldini titolare con Kevin Carlos riferimento offensivo.',
+    ],
   },
   {
     id: 'lecce',
@@ -377,6 +458,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Helgason, Morente',
     },
     fantasyImpact: 'Falcone valorizzato dal Modificatore per volume di parate.',
+    news: [
+      "Caso Banda: il centrocampista/esterno zambiano non si è presentato in ritiro, contesta il contratto e punta a un club arabo/libico; contenzioso ancora aperto.",
+      'Difesa in bilico: Tiago Gabriel (25M di valutazione) seguito da Crystal Palace e Bournemouth verso l\'addio; per sostituirlo si valuta Derek Cornelius dal Marsiglia.',
+      "Di Francesco lavora sull'assetto salvezza; esordio in Coppa Italia il 17/8 col Palermo, campionato al via il 23/8 contro il Venezia.",
+    ],
   },
   {
     id: 'monza',
@@ -390,12 +476,17 @@ export const teams: Team[] = [
     overall: 6.8,
     identity: '3-4-2-1 basato su marcature a uomo ad alta intensità.',
     offensiveProduction: 'Affidata alle giocate di Colpani e Mota a supporto di Cutrone/Petagna.',
-    defensiveSolidity: 'Buona protezione centrale offerta da Pessina e Akinsanmiro.',
+    defensiveSolidity: 'Akinsanmiro chiamato a coprire il vuoto lasciato da Pessina, ai box a lungo (v. news).',
     setPieces: {
-      penalties: 'Pessina, Cutrone',
-      freeKicksCorners: 'Colpani, Pessina',
+      penalties: 'Cutrone (Pessina ai box, rigorista da confermare)',
+      freeKicksCorners: 'Colpani',
     },
-    fantasyImpact: 'Pessina e Colpani valori certi per la titolarità.',
+    fantasyImpact: '⚠ Pessina si opera al ginocchio il 14/8, out 2-3 mesi: da evitare in asta nel breve termine. Colpani resta valore certo per la titolarità.',
+    news: [
+      'Emergenza Pessina: il capitano si opera al ginocchio (14/8), starà fuori 2-3 mesi e il club non interverrà sul mercato per sostituirlo.',
+      'Nuovo tecnico Ivan Jurić, presentato il 31/7 e debuttante il 14/8 in Coppa Italia contro l\'Avellino; ancora dubbi sulla tenuta defensiva nonostante i miglioramenti offensivi.',
+      'Mercato: dentro Akinsanmiro (Inter), Varela e Varesis (difensori), Robinson (prestito da Southampton) e Mariani (Primavera Roma); fuori Petagna (verso il Pisa) e Brorsson (Aarhus).',
+    ],
   },
   {
     id: 'frosinone',
@@ -414,7 +505,12 @@ export const teams: Team[] = [
       penalties: 'Calò, Raimondo',
       freeKicksCorners: 'Calò, Schmid',
     },
-    fantasyImpact: 'Schmid scommessa interessante a centrocampo.',
+    fantasyImpact: 'Schmid scommessa interessante a centrocampo. Attenzione: Calò seguito da quattro club di Serie B e dalla Turchia, possibile partenza non confermata.',
+    news: [
+      "Raffica di colpi tra 10 e 12/8: il difensore Fayed (Fenerbahçe), il terzino Terzic (ex Fiorentina), i centrocampisti austriaci Grillitsch e Schmid, e Masini in prestito con obbligo dal Genoa.",
+      'Uscite in valutazione: Calò (cercato da quattro club di B e dalla Turchia) e Monterisi (due club spagnoli su di lui) — non ancora confermate.',
+      'Giovanili: risolti i contratti dei classe 2007/2008 Toci e Vergani; Befani in prestito al Torino, Obleac al Casarano.',
+    ],
   },
   {
     id: 'venezia',
@@ -434,6 +530,11 @@ export const teams: Team[] = [
       freeKicksCorners: 'Basic, Busio',
     },
     fantasyImpact: 'Schingtienne risorsa low-cost da voto sicuro.',
+    news: [
+      'Difesa in ricostruzione: uscite multiple tra 6 e 11/8 (Bjarkason al Südtirol, Sidibé al Vitoria, Ascione alla Vis Pesaro, Venturi all\'Avellino), Casas in trattativa col Las Palmas.',
+      'In entrata Sohm dalla Fiorentina (prestito con diritto di riscatto); testati in amichevole Rrahmani e Adams.',
+      'Okoro resta nonostante gli approcci, Adorante ha rifiutato il Pisa e vuole restare almeno fino a gennaio; Stroppa prepara l\'esordio contro il Modena.',
+    ],
   },
 ];
 

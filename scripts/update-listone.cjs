@@ -20,9 +20,32 @@ const OUT_PATH = path.join(__dirname, '..', 'src', 'data', 'listone.json');
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Blip di rete transitori (visti anche dai runner GitHub Actions) sono
+// normali: un paio di retry con piccolo backoff bastano a coprirli senza
+// mascherare un blocco persistente.
+async function fetchWithRetry(url, options, attempts = 3) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fetch(url, options);
+    } catch (err) {
+      lastErr = err;
+      if (i < attempts - 1) {
+        console.warn(`Fetch fallito (tentativo ${i + 1}/${attempts}): ${err.message}${err.cause ? ` (cause: ${err.cause})` : ''} — riprovo...`);
+        await sleep(2000 * (i + 1));
+      }
+    }
+  }
+  throw lastErr;
+}
+
 async function resolveDownloadUrl() {
   try {
-    const res = await fetch(DOWNLOAD_PAGE, { headers: { 'User-Agent': UA } });
+    const res = await fetchWithRetry(DOWNLOAD_PAGE, { headers: { 'User-Agent': UA } });
     if (!res.ok) throw new Error(`pagina download: HTTP ${res.status}`);
     const html = await res.text();
     const match = html.match(/https:\/\/www\.chiccheinformatiche\.com\/download\/\d+\/[^"'\s]*/);
@@ -39,7 +62,7 @@ async function resolveDownloadUrl() {
 }
 
 async function downloadXlsx(url) {
-  const res = await fetch(url, { headers: { 'User-Agent': UA } });
+  const res = await fetchWithRetry(url, { headers: { 'User-Agent': UA } });
   if (!res.ok) throw new Error(`download xlsx: HTTP ${res.status}`);
   const buf = Buffer.from(await res.arrayBuffer());
   const contentType = res.headers.get('content-type') || '';

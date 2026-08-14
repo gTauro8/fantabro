@@ -14,6 +14,24 @@ const ROLES: Role[] = ['POR', 'DIF', 'CEN', 'ATT'];
  */
 const MAX_PER_TEAM = 5;
 
+/**
+ * Tetto massimo di giocatori di fascia Top nell'intera rosa generata (non per
+ * reparto). In un'asta reale con ~20 squadre a caccia degli stessi pochi
+ * giocatori Top, il prezzo viene spinto ben oltre il FVM listato (un Lautaro
+ * da 500 crediti totali arriva a costare 200+): puntare ad averne uno per
+ * reparto è irrealistico e brucerebbe la stragrande maggioranza del budget.
+ */
+const MAX_TOP_PER_SQUAD = 1;
+
+/**
+ * Un singolo slot non può assorbire più di questo multiplo della sua quota
+ * "equa" di budget di reparto (budget di reparto rimanente / slot rimanenti).
+ * Impedisce che il primo giocatore scelto in un reparto esaurisca quasi
+ * tutto il budget disponibile, lasciando gli slot successivi riempibili solo
+ * con scarti da 1 credito.
+ */
+const SLOT_FLEX_MULTIPLIER = 2.2;
+
 const TIER_BASE_SCORE: Record<MarketTier, number> = {
   Top: 8,
   'Semi-top': 6,
@@ -84,8 +102,10 @@ export interface GeneratedSquad {
  * Genera una rosa completando gli slot di ruolo ancora mancanti per la
  * squadra, tramite selezione greedy pesata su un punteggio "esperti"
  * (fascia FVM + categoria curata + bonus Sorprese + preferenza di squadra),
- * con un tetto di spesa per slot che riserva sempre almeno 1 credito per gli
- * slot successivi dello stesso ruolo.
+ * con un tetto di spesa per slot legato alla quota equa di budget del
+ * reparto (vedi SLOT_FLEX_MULTIPLIER) e un tetto complessivo di giocatori
+ * Top nell'intera rosa (vedi MAX_TOP_PER_SQUAD), per restare su risultati
+ * plausibili in un'asta reale a budget condiviso.
  */
 export function generateSquad({
   team,
@@ -112,9 +132,12 @@ export function generateSquad({
 
   const chosenIds = new Set<string>();
   const pickedPerTeam = new Map<string, number>();
+  let topPicksSoFar = 0;
   for (const pick of team.picks) {
     const p = activeListone.find((x) => x.id === pick.playerId);
-    if (p) pickedPerTeam.set(p.team, (pickedPerTeam.get(p.team) ?? 0) + 1);
+    if (!p) continue;
+    pickedPerTeam.set(p.team, (pickedPerTeam.get(p.team) ?? 0) + 1);
+    if (tiers.get(p.id) === 'Top') topPicksSoFar += 1;
   }
   const picks: GeneratedPick[] = [];
   const warnings: string[] = [];
@@ -142,20 +165,31 @@ export function generateSquad({
 
     for (let i = 0; i < remainingSlots; i++) {
       const reserveForRest = slotsLeft - 1;
-      const maxSpend = Math.max(1, budgetLeftForRole - reserveForRest);
+      const fairShare = budgetLeftForRole / slotsLeft;
+      const flexCap = Math.ceil(fairShare * SLOT_FLEX_MULTIPLIER);
+      const maxSpend = Math.max(1, Math.min(budgetLeftForRole - reserveForRest, flexCap));
       const underTeamCap = (c: (typeof candidates)[number]) =>
         (pickedPerTeam.get(c.player.team) ?? 0) < MAX_PER_TEAM;
+      const underTopCap = (c: (typeof candidates)[number]) =>
+        c.tier !== 'Top' || topPicksSoFar < MAX_TOP_PER_SQUAD;
 
       let choice = candidates.find(
         (c) =>
           !chosenIds.has(c.player.id) &&
           c.player.price <= maxSpend &&
           c.player.price <= totalRemaining &&
-          underTeamCap(c),
+          underTeamCap(c) &&
+          underTopCap(c),
       );
       if (!choice) {
         choice = candidates
-          .filter((c) => !chosenIds.has(c.player.id) && c.player.price <= totalRemaining && underTeamCap(c))
+          .filter(
+            (c) =>
+              !chosenIds.has(c.player.id) &&
+              c.player.price <= totalRemaining &&
+              underTeamCap(c) &&
+              underTopCap(c),
+          )
           .sort((a, b) => a.player.price - b.player.price)[0];
       }
       if (!choice) {
@@ -167,6 +201,7 @@ export function generateSquad({
 
       chosenIds.add(choice.player.id);
       pickedPerTeam.set(choice.player.team, (pickedPerTeam.get(choice.player.team) ?? 0) + 1);
+      if (choice.tier === 'Top') topPicksSoFar += 1;
       budgetLeftForRole -= choice.player.price;
       totalRemaining -= choice.player.price;
       slotsLeft -= 1;

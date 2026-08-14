@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
-import { LayoutDashboard, Shield, Users, Calculator, Wallet, Radar, Menu, X, Sparkles } from 'lucide-react';
+import { LayoutDashboard, Shield, Users, Calculator, Wallet, Radar, Menu, X, Sparkles, Wand2 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Overview', icon: LayoutDashboard, end: true },
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { to: '/sorprese', label: 'Sorprese', icon: Sparkles },
   { to: '/tefr', label: 'Calcolatore TEFR', icon: Calculator },
   { to: '/asta', label: 'Assistente Asta', icon: Wallet },
+  { to: '/genera-rosa', label: 'Genera rosa', icon: Wand2 },
 ];
 
 export function Layout() {

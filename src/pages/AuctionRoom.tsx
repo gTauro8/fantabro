@@ -269,7 +269,8 @@ export function AuctionRoom() {
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
               <thead>
                 <tr className="border-b border-[var(--border)] text-left text-[11px] uppercase tracking-wide text-[var(--text-faint)]">
                   <th className="px-3 py-2.5 font-medium">Calciatore</th>
@@ -336,6 +337,7 @@ export function AuctionRoom() {
                 })}
               </tbody>
             </table>
+            </div>
             {filtered.length > 200 && (
               <p className="px-3 py-2 text-[11px] text-[var(--text-faint)]">
                 Mostrati i primi 200 di {filtered.length} risultati — affina la ricerca o il filtro.

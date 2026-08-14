@@ -56,7 +56,7 @@ export function Teams() {
       />
 
       <div className="overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[860px] text-sm">
           <thead>
             <tr className="border-b border-[var(--border)] text-left text-[11px] uppercase tracking-wide text-[var(--text-faint)]">
               <th className="px-4 py-3 font-medium">#</th>

@@ -110,7 +110,8 @@ export function ListoneBrowser() {
       </p>
 
       <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[560px] text-sm">
           <thead>
             <tr className="border-b border-[var(--border)] text-left text-[11px] uppercase tracking-wide text-[var(--text-faint)]">
               <th className="px-3 py-2.5 font-medium">
@@ -157,6 +158,7 @@ export function ListoneBrowser() {
             })}
           </tbody>
         </table>
+        </div>
         {filtered.length > 250 && (
           <p className="px-3 py-2 text-[11px] text-[var(--text-faint)]">
             Mostrati i primi 250 di {filtered.length} risultati — affina la ricerca o i filtri.

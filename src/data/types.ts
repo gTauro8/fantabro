@@ -65,6 +65,8 @@ export interface MarketData {
   fvm: number;
   listoneTeam: string;
   listoneName: string;
+  /** id del calciatore nel listone ufficiale, per lookup inversi rapidi. */
+  listoneId?: string;
 }
 
 export interface AuctionPick {

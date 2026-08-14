@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import { ArrowLeft, Check, RotateCcw, Search, Sparkles, X } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, Check, Flame, RotateCcw, Search, Sparkles, X } from 'lucide-react';
 import { Card } from '../components/Card';
 import { StrategyPanel } from '../components/StrategyPanel';
 import { activeListone, getAlternatives, type ListonePlayer } from '../data/listone';
 import { ROLE_LABEL, type Role } from '../data/types';
 import { assignPlayer, spentByTeam, unassignPlayer, useAuctions } from '../lib/useAuctions';
+import { buildAuctionInsights } from '../lib/auctionInsights';
 
 const ROLES: Role[] = ['POR', 'DIF', 'CEN', 'ATT'];
 const ROLE_COLOR: Record<Role, string> = {
@@ -72,6 +73,16 @@ export function AuctionRoom() {
   }, [focusedPlayer, availableIds]);
 
   const alternatives = focusedPlayer ? getAlternatives(focusedPlayer, availableIds, 3) : [];
+
+  const insights = useMemo(() => buildAuctionInsights(), []);
+
+  const availableBreakouts = useMemo(() => {
+    return [...insights.breakoutByListoneId.entries()]
+      .filter(([listoneId]) => availableIds.has(listoneId))
+      .map(([listoneId, breakout]) => ({ listoneId, breakout }))
+      .filter(({ breakout }) => (roleFilter === 'ALL' ? true : breakout.role === roleFilter))
+      .slice(0, 8);
+  }, [insights, availableIds, roleFilter]);
 
   if (!auction) {
     return (
@@ -284,6 +295,9 @@ export function AuctionRoom() {
               <tbody>
                 {filtered.slice(0, 200).map((p) => {
                   const assigned = assignedMap.get(p.id);
+                  const breakout = insights.breakoutByListoneId.get(p.id);
+                  const curatedNote = insights.curatedByListoneId.get(p.id);
+                  const isHighRisk = curatedNote?.risk === 'Alto';
                   return (
                     <tr
                       key={p.id}
@@ -294,7 +308,21 @@ export function AuctionRoom() {
                         assigned && 'opacity-50',
                       )}
                     >
-                      <td className="px-3 py-2 font-medium text-[var(--text)]">{p.name}</td>
+                      <td className="px-3 py-2 font-medium text-[var(--text)]">
+                        <span className="flex items-center gap-1.5">
+                          {p.name}
+                          {breakout && (
+                            <span title={`Sorpresa: ${breakout.reason}`}>
+                              <Flame size={12} className="shrink-0 text-orange-400" />
+                            </span>
+                          )}
+                          {isHighRisk && (
+                            <span title={curatedNote?.note}>
+                              <AlertTriangle size={12} className="shrink-0 text-amber-400" />
+                            </span>
+                          )}
+                        </span>
+                      </td>
                       <td className="px-3 py-2 text-[var(--text-dim)]">{p.team}</td>
                       <td className="px-3 py-2">
                         <span
@@ -374,6 +402,37 @@ export function AuctionRoom() {
                     <span className="text-[var(--text-dim)]">Qt. {focusedPlayer.price}</span>
                     <span className="font-semibold text-[var(--text)]">FVM {focusedPlayer.fvm}</span>
                   </div>
+                  {(() => {
+                    const breakout = insights.breakoutByListoneId.get(focusedPlayer.id);
+                    const curatedNote = insights.curatedByListoneId.get(focusedPlayer.id);
+                    return (
+                      <>
+                        {breakout && (
+                          <div className="mt-2 flex items-start gap-1.5 rounded-md bg-orange-500/10 px-2 py-1.5 text-[11px] leading-relaxed text-orange-300">
+                            <Flame size={12} className="mt-0.5 shrink-0" />
+                            <span>
+                              <span className="font-semibold">Sorpresa:</span> {breakout.reason}
+                            </span>
+                          </div>
+                        )}
+                        {curatedNote && (
+                          <div
+                            className={clsx(
+                              'mt-2 flex items-start gap-1.5 rounded-md px-2 py-1.5 text-[11px] leading-relaxed',
+                              curatedNote.risk === 'Alto'
+                                ? 'bg-amber-500/10 text-amber-300'
+                                : 'bg-[var(--bg-elevated)] text-[var(--text-dim)]',
+                            )}
+                          >
+                            {curatedNote.risk === 'Alto' && (
+                              <AlertTriangle size={12} className="mt-0.5 shrink-0" />
+                            )}
+                            <span>{curatedNote.note}</span>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                   {assignedMap.has(focusedPlayer.id) ? (
                     <p className="mt-2 text-[11px] text-amber-400">
                       Già assegnato a {assignedMap.get(focusedPlayer.id)!.teamName}
@@ -442,6 +501,46 @@ export function AuctionRoom() {
                 ))}
               </div>
             )}
+          </Card>
+
+          <Card className="mt-6">
+            <div className="mb-3 flex items-center gap-2">
+              <Flame size={15} className="text-orange-400" />
+              <h2 className="text-sm font-semibold text-[var(--text)]">Sorprese disponibili</h2>
+            </div>
+            {availableBreakouts.length === 0 ? (
+              <p className="text-[11px] text-[var(--text-faint)]">
+                Nessuna sorpresa ancora libera per questo filtro.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {availableBreakouts.map(({ listoneId, breakout }) => {
+                  const player = activeListone.find((p) => p.id === listoneId);
+                  return (
+                    <button
+                      key={breakout.id}
+                      onClick={() => setFocusedId(listoneId)}
+                      className="flex w-full flex-col gap-0.5 rounded-lg border border-[var(--border-soft)] px-3 py-2 text-left hover:bg-[var(--surface-hover)]"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-[var(--text)]">{breakout.name}</span>
+                        <span className="text-[10px] text-[var(--text-faint)]">
+                          {breakout.team}
+                          {player && <> · FVM {player.fvm}</>}
+                        </span>
+                      </div>
+                      <p className="text-[10px] leading-relaxed text-[var(--text-faint)]">{breakout.reason}</p>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            <Link
+              to="/sorprese"
+              className="mt-3 block text-center text-[11px] font-medium text-emerald-400 hover:underline"
+            >
+              Vedi tutte le sorprese →
+            </Link>
           </Card>
         </div>
       </div>

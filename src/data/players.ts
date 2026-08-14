@@ -170,6 +170,7 @@ for (const player of players) {
       fvm: best.fvm,
       listoneTeam: best.team,
       listoneName: best.name,
+      listoneId: best.id,
     };
     // Il listone ufficiale è la fonte di verità sulla squadra attuale: se il
     // giocatore è stato trovato ma con una squadra diversa (trasferimento),

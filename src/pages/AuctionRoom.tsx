@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { AlertTriangle, ArrowLeft, Check, Flame, RotateCcw, Search, Sparkles, X } from 'lucide-react';
 import { Card } from '../components/Card';
 import { StrategyPanel } from '../components/StrategyPanel';
+import { SquadGenerator } from '../components/SquadGenerator';
 import { activeListone, getAlternatives, type ListonePlayer } from '../data/listone';
 import { ROLE_LABEL, type Role } from '../data/types';
 import { assignPlayer, spentByTeam, unassignPlayer, useAuctions } from '../lib/useAuctions';
@@ -31,7 +32,7 @@ export function AuctionRoom() {
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const [assignTarget, setAssignTarget] = useState<ListonePlayer | null>(null);
   const [expandedTeamId, setExpandedTeamId] = useState<string | null>(null);
-  const [expandedTab, setExpandedTab] = useState<'strategia' | 'rosa'>('strategia');
+  const [expandedTab, setExpandedTab] = useState<'strategia' | 'rosa' | 'genera'>('strategia');
 
   const assignedMap = useMemo(() => {
     const map = new Map<string, { teamId: string; teamName: string; price: number }>();
@@ -187,6 +188,17 @@ export function AuctionRoom() {
                 >
                   Rosa ({team.picks.length})
                 </button>
+                <button
+                  onClick={() => setExpandedTab('genera')}
+                  className={clsx(
+                    'rounded-md px-2.5 py-1 text-xs font-medium transition-colors',
+                    expandedTab === 'genera'
+                      ? 'bg-emerald-500/15 text-emerald-400'
+                      : 'text-[var(--text-dim)] hover:text-[var(--text)]',
+                  )}
+                >
+                  Genera
+                </button>
               </div>
             </div>
 
@@ -196,6 +208,18 @@ export function AuctionRoom() {
                 budgetPerTeam={auction.budgetPerTeam}
                 availableIds={availableIds}
                 onSelectPlayer={setFocusedId}
+              />
+            ) : expandedTab === 'genera' ? (
+              <SquadGenerator
+                team={team}
+                budgetPerTeam={auction.budgetPerTeam}
+                availableIds={availableIds}
+                onAssignAll={(picks) => {
+                  const validPicks = picks.filter((p) => availableIds.has(p.playerId));
+                  updateAuction(auctionId, (a) =>
+                    validPicks.reduce((acc, p) => assignPlayer(acc, team.id, p.playerId, p.price), a),
+                  );
+                }}
               />
             ) : team.picks.length === 0 ? (
               <p className="text-sm text-[var(--text-dim)]">Nessun giocatore ancora assegnato.</p>

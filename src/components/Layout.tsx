@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
-import { LayoutDashboard, Shield, Users, Calculator, Wallet, Radar, LayoutGrid, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Shield, Users, Calculator, Wallet, Radar, Menu, X } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Overview', icon: LayoutDashboard, end: true },
   { to: '/squadre', label: 'Squadre', icon: Shield },
-  { to: '/formazioni', label: 'Formazioni', icon: LayoutGrid },
   { to: '/giocatori', label: 'Giocatori', icon: Users },
   { to: '/tefr', label: 'Calcolatore TEFR', icon: Calculator },
   { to: '/asta', label: 'Assistente Asta', icon: Wallet },

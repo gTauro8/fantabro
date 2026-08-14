@@ -1,10 +1,16 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Target, ShieldCheck, Flag, Sparkles, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Target, ShieldCheck, Flag, Sparkles, TrendingUp, Users2, AlertTriangle } from 'lucide-react';
 import { getTeamById, teams } from '../data/teams';
 import { players } from '../data/players';
+import { getLineup } from '../data/lineups';
+import { activeListone } from '../data/listone';
 import { Card } from '../components/Card';
 import { StatBar } from '../components/StatBar';
 import { CategoryBadge } from '../components/CategoryBadge';
+import { PitchLineup } from '../components/PitchLineup';
+import { BenchDepth } from '../components/BenchDepth';
+
+const ROLE_ORDER = { POR: 0, DIF: 1, CEN: 2, ATT: 3 } as const;
 
 export function TeamDetail() {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +29,10 @@ export function TeamDetail() {
 
   const rank = [...teams].sort((a, b) => b.overall - a.overall).findIndex((t) => t.id === team.id) + 1;
   const roster = players.filter((p) => p.team === team.name);
+  const lineup = getLineup(team.id);
+  const fullSquad = activeListone
+    .filter((p) => p.team === team.name)
+    .sort((a, b) => ROLE_ORDER[a.role] - ROLE_ORDER[b.role] || b.fvm - a.fvm);
 
   return (
     <div>
@@ -37,7 +47,7 @@ export function TeamDetail() {
       <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-emerald-400">
-            #{rank} in Serie A · {team.formation}
+            #{rank} in Serie A · {lineup?.formation ?? team.formation}
           </p>
           <h1 className="text-3xl font-bold tracking-tight text-[var(--text)]">{team.name}</h1>
           <p className="mt-1 text-sm text-[var(--text-dim)]">Allenatore: {team.coach}</p>
@@ -64,6 +74,33 @@ export function TeamDetail() {
           <p className="text-sm leading-relaxed text-[var(--text-dim)]">{team.identity}</p>
         </Card>
       </div>
+
+      {lineup && (
+        <div className="mb-6">
+          <div className="mb-3 rounded-xl border border-amber-500/25 bg-amber-500/10 px-4 py-3">
+            <p className="flex items-start gap-2 text-xs leading-relaxed text-amber-200/90">
+              <AlertTriangle size={15} className="mt-0.5 shrink-0 text-amber-400" />
+              Probabile formazione stimata da fonti pubbliche al 14/08/2026, non ufficiale di
+              giornata: usala per capire le gerarchie, verifica sempre le notizie live prima di
+              una scelta pesante in asta.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
+            <PitchLineup lineup={lineup} />
+            <Card>
+              <p className="mb-2 text-[11px] uppercase tracking-wide text-[var(--text-faint)]">
+                Ballottaggi aperti
+              </p>
+              <p className="text-xs leading-relaxed text-[var(--text-dim)]">{lineup.battles}</p>
+            </Card>
+          </div>
+
+          <div className="mt-6">
+            <BenchDepth bench={lineup.bench} />
+          </div>
+        </div>
+      )}
 
       <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
@@ -119,7 +156,7 @@ export function TeamDetail() {
       )}
 
       {roster.length > 0 && (
-        <Card>
+        <Card className="mb-6">
           <h2 className="mb-4 text-sm font-semibold text-[var(--text)]">
             Giocatori profilati ({roster.length})
           </h2>
@@ -136,6 +173,39 @@ export function TeamDetail() {
                 <CategoryBadge category={pl.category} />
               </div>
             ))}
+          </div>
+        </Card>
+      )}
+
+      {fullSquad.length > 0 && (
+        <Card>
+          <div className="mb-4 flex items-center gap-2">
+            <Users2 size={16} className="text-emerald-400" />
+            <h2 className="text-sm font-semibold text-[var(--text)]">
+              Rosa completa ({fullSquad.length}) — listone ufficiale 2026/27
+            </h2>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[420px] text-sm">
+              <thead>
+                <tr className="border-b border-[var(--border-soft)] text-left text-[11px] uppercase tracking-wide text-[var(--text-faint)]">
+                  <th className="py-2 pr-3 font-medium">Calciatore</th>
+                  <th className="py-2 pr-3 font-medium">R</th>
+                  <th className="py-2 pr-3 font-medium">Qt.</th>
+                  <th className="py-2 pr-3 font-medium">FVM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {fullSquad.map((p) => (
+                  <tr key={p.id} className="border-b border-[var(--border-soft)] last:border-0">
+                    <td className="py-1.5 pr-3 text-[var(--text)]">{p.name}</td>
+                    <td className="py-1.5 pr-3 text-[var(--text-faint)]">{p.role}</td>
+                    <td className="py-1.5 pr-3 text-[var(--text-dim)]">{p.price}</td>
+                    <td className="py-1.5 pr-3 font-semibold text-[var(--text)]">{p.fvm}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </Card>
       )}

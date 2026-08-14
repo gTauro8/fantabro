@@ -3,7 +3,6 @@ import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Teams } from './pages/Teams';
 import { TeamDetail } from './pages/TeamDetail';
-import { Formazioni } from './pages/Formazioni';
 import { Players } from './pages/Players';
 import { Tefr } from './pages/Tefr';
 import { AuctionPage } from './pages/AuctionPage';
@@ -17,7 +16,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/squadre" element={<Teams />} />
           <Route path="/squadre/:id" element={<TeamDetail />} />
-          <Route path="/formazioni" element={<Formazioni />} />
           <Route path="/giocatori" element={<Players />} />
           <Route path="/tefr" element={<Tefr />} />
           <Route path="/asta" element={<AuctionPage />} />

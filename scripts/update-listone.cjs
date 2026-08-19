@@ -57,8 +57,14 @@ const MANUAL_PENDING_PLAYERS = [
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
+class SkipUpdateError extends Error {}
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isNetworkFetchError(err) {
+  return Boolean(err && typeof err.message === 'string' && err.message.includes('fetch failed'));
 }
 
 // Blip di rete transitori (visti anche dai runner GitHub Actions) sono
@@ -140,7 +146,15 @@ function sheetToPlayers(wb, sheetName, extra) {
 async function main() {
   const url = await resolveDownloadUrl();
   console.log('Scarico da:', url);
-  const buf = await downloadXlsx(url);
+  let buf;
+  try {
+    buf = await downloadXlsx(url);
+  } catch (err) {
+    if (isNetworkFetchError(err)) {
+      throw new SkipUpdateError(`sorgente non raggiungibile: ${err.message}`);
+    }
+    throw err;
+  }
 
   const wb = XLSX.read(buf, { type: 'buffer' });
   const active = sheetToPlayers(wb, 'Tutti', { transferredOut: false });
@@ -175,6 +189,10 @@ async function main() {
 }
 
 main().catch((err) => {
+  if (err instanceof SkipUpdateError) {
+    console.warn('Aggiornamento listone saltato:', err.message);
+    process.exit(0);
+  }
   console.error('Aggiornamento listone FALLITO:', err.message, err.cause ? `(cause: ${err.cause})` : '');
   process.exit(1);
 });
